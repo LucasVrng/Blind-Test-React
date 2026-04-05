@@ -15,19 +15,24 @@ function PlayAudio() {
 
     // const [isPlaying, setIsPlaying] = useState(false);
     const [search, setSearch] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     const [currentSong, setCurrentSong] = useState(() => {
         return songs[Math.floor(Math.random() * songs.length)];
     });
 
-    function handleSearch() {
-
-    }
-
     return (
         <>
         <audio src={`Audio/${currentSong}`} controls={true}></audio>
-        <input type="text" placeholder="search Song" onChange={handleSearch}></input>
-        <div className="suggestions"></div>
+        <input type="text" placeholder="search song" onChange={(e) => setSearch(e.target.value)}></input>
+        <ul className="suggestions">
+            {songs
+            .filter((song) => song.toLowerCase().includes(search.toLowerCase()))
+            .map((song,key) => (
+                <li key={key}>
+                    {song}{" "}
+                </li>
+            ))}
+        </ul>
         </>
     )
 }
